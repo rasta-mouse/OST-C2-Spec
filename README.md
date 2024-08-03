@@ -21,17 +21,13 @@ This specification makes the following assumptions:
 
 Below is a list of terms used throughout this document.
 
-### Implant Metadata
-Information that an implant reports about itself to a team server.
+- **Implant Metadata**:  Information that an implant reports about itself to a team server.
 
-### Task Request
-A task given to an implant to perform.
+- **Task Request**:  A task given to an implant to perform.
 
-### Task Response
-The status and output (if any) of a given task.
+- **Task Response**:  The status and output (if any) of a given task.
 
-### Session Key
-A unique encryption key used by an implant to encrypt its messages.
+- **Session Key**:  A unique encryption key used by an implant to encrypt its messages.
 
 # Task Messages
 
@@ -48,17 +44,17 @@ Each task request and response message MUST have the following 16-byte header.
 | -------------------------------------------------------------|
 ```
 
-- **Type** - 1-byte integer.  The ‘type’ of task this is, e.g. ‘change directory’, ‘list processes’, etc.  See [[Task Types and Codes](https://github.com/rasta-mouse/ost-c2-spec?tab=readme-ov-file#task-types-and-codes)].
+- **Type**: 1-byte integer.  The ‘type’ of task this is, e.g. ‘change directory’, ‘list processes’, etc.  See [[Task Types and Codes](https://github.com/rasta-mouse/ost-c2-spec?tab=readme-ov-file#task-types-and-codes)].
 
-- **Code** - 1-byte integer.  A ‘sub code’ for the given Type, e.g ‘connect’, ‘read’, ‘write’, and ‘close’ for SOCKS.  See [[Task Types and Codes](https://github.com/rasta-mouse/ost-c2-spec?tab=readme-ov-file#task-types-and-codes)].
+- **Code**: 1-byte integer.  A ‘sub code’ for the given Type, e.g ‘connect’, ‘read’, ‘write’, and ‘close’ for SOCKS.  See [[Task Types and Codes](https://github.com/rasta-mouse/ost-c2-spec?tab=readme-ov-file#task-types-and-codes)].
 
-- **Flags** - 2-byte integer.  A set of bitwise flags to describe the state of the message.  See [[Task Flags](https://github.com/rasta-mouse/ost-c2-spec?tab=readme-ov-file#task-flags)].
+- **Flags**: 2-byte integer.  A set of bitwise flags to describe the state of the message.  See [[Task Flags](https://github.com/rasta-mouse/ost-c2-spec?tab=readme-ov-file#task-flags)].
 
-- **Label** - 4-byte integer.  A unique label to correlate multiple messages related to the same task.
+- **Label**: 4-byte integer.  A unique label to correlate multiple messages related to the same task.
 
-- **Identifier** - 4-byte integer.  A sequential identifier used to construct fragmented messages in the correct order.
+- **Identifier**: 4-byte integer.  A sequential identifier used to construct fragmented messages in the correct order.
 
-- **Length** - 4-byte integer.  The total length of the task data.
+- **Length**: 4-byte integer.  The total length of the task data.
 
 ## Task Types and Codes
 
@@ -193,9 +189,9 @@ The task header and task data are combined and AES-encrypted with the implant’
 | ------------------------------------ |
 ```
 
-- **Iv** - 16-byte initialisation vector.
-- **Checksum** - 32-byte HMAC256 checksum.
-- **Data** - The encrypted data.
+- **Iv**:  A 16-byte initialisation vector.
+- **Checksum**:  A 32-byte HMAC256 checksum.
+- **Data**:  The encrypted data.
 
 # Message Exchanges
 
