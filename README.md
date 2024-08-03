@@ -151,16 +151,16 @@ Each task request and response message MUST have the following 16-byte header.
 Some flags are mutually exclusive and MUST NOT be set together (e.g. the encoding flags).  If no flags are set, a task SHOULD be assumed to have completed successfully and NOT fragmented.
 
 ```text
-| Value |	Description                              |
+| Value | Description                              |
 | ----- | ---------------------------------------- |
-| 0	    | No flags                                 |
-| 1	    | Task Error                               |
-| 2	    | Task Running (as job)                    |
-| 4	    | Message is fragmented, more to follow    |
-| 8     |	Message is fragmented, no more to follow |
-| 16    |	Data is JSON encoded                     |
-| 32    |	Data is XML encoded                      |
-| 64    |	Data is Protobuf encoded                 |
+| 0     | No flags                                 |
+| 1     | Task Error                               |
+| 2     | Task Running (as job)                    |
+| 4     | Message is fragmented, more to follow    |
+| 8     | Message is fragmented, no more to follow |
+| 16    | Data is JSON encoded                     |
+| 32    | Data is XML encoded                      |
+| 64    | Data is Protobuf encoded                 |
 ```
 
 ## Task Data
