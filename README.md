@@ -265,19 +265,19 @@ Implementations SHOULD gracefully handle receiving a message with fields or flag
 
 ```text
 IMPLANT-META {
-	id             [1]   Uint32
-	sleep          [2]   UInt32                   OPTIONAL
-	jitter         [3]   UInt32                   OPTIONAL
-	session-key    [4]   SEQUENCE of Byte (32)
-	username       [5]   String
-	hostname       [6]   String
-	internal-ips   [7]   SEQUENCE of Byte (4)
-	process-name   [8]   String
-	process-id     [9]   UInt32
-	architecture   [10]  [Architecture]
-	platform       [11]  [Platform]
-	os-description [12]  String                   OPTIONAL
-	integrity      [13]  [Integrity]
+  id             [1]   Uint32
+  sleep          [2]   UInt32                   OPTIONAL
+  jitter         [3]   UInt32                   OPTIONAL
+  session-key    [4]   SEQUENCE of Byte (32)
+  username       [5]   String
+  hostname       [6]   String
+  internal-ips   [7]   SEQUENCE of Byte (4)
+  process-name   [8]   String
+  process-id     [9]   UInt32
+  architecture   [10]  [Architecture]
+  platform       [11]  [Platform]
+  os-description [12]  String                   OPTIONAL
+  integrity      [13]  [Integrity]
 }
 ```
 
@@ -400,10 +400,10 @@ FILE-DOWNLOAD-REQ {
 
 ```text
 FILE-DOWNLOAD-REP {
-file-length    [1]  UInt32
-current-chuck  [2]  Byte
-total-chunks   [3]  Byte
-chunk-content  [4]  SEQUENCE of Byte
+  file-length    [1]  UInt32
+  current-chuck  [2]  Byte
+  total-chunks   [3]  Byte
+  chunk-content  [4]  SEQUENCE of Byte
 }
 ```
 
@@ -435,8 +435,8 @@ CREATE-DIR-REP {
 
 ```text
 COPY-DIR-REQ {
-source       [1]  String
-destination  [2]  String
+  source       [1]  String
+  destination  [2]  String
 }
 ```
 
@@ -444,8 +444,8 @@ destination  [2]  String
 
 ```text
 MOVE-DIR-REQ {
-source       [1] String
-destination  [2]  String
+  source       [1] String
+  destination  [2]  String
 }
 ```
 
@@ -470,9 +470,9 @@ LIST-DIR-REP {
 
 ```text
 DELETE-DIR-REQ {
-path     [1]  String
-recurse  [2]  Boolean  OPTIONAL
-force    [3]  Boolean  OPTIONAL
+  path     [1]  String
+  recurse  [2]  Boolean  OPTIONAL
+  force    [3]  Boolean  OPTIONAL
 }
 ```
 
@@ -666,11 +666,11 @@ REQ-QUERY-REP {
 
 ```text
 REG-ADD-REQ {
-hive   [1]  [RegistryHive]
-key    [2]  String
-value  [3]  [RegistryValueKind]
-type   [4]  String
-value  [5]  SEQUENCE of Byte
+  hive   [1]  [RegistryHive]
+  key    [2]  String
+  value  [3]  [RegistryValueKind]
+  type   [4]  String
+  value  [5]  SEQUENCE of Byte
 }
 ```
 
@@ -678,10 +678,10 @@ value  [5]  SEQUENCE of Byte
 
 ```text
 REG-DELETE-REQ {
-hive   [1]  [RegistryHive]
-key    [2]  String
-value  [3]  String          OPTIONAL
-force  [4]  Boolean         OPTIONAL
+  hive   [1]  [RegistryHive]
+  key    [2]  String
+  value  [3]  String          OPTIONAL
+  force  [4]  Boolean         OPTIONAL
 }
 ```
 
@@ -701,9 +701,9 @@ RegistryHive {
 
 ```text
 RegistryKey {
-hive            [1]  [RegistryHive]
-name            [2]  String
-access-control  [3]  [RegistrySecurity]  OPTIONAL
+  hive            [1]  [RegistryHive]
+  name            [2]  String
+  access-control  [3]  [RegistrySecurity]  OPTIONAL
 }
 ```
 
@@ -711,10 +711,10 @@ access-control  [3]  [RegistrySecurity]  OPTIONAL
 
 ```text
 RegistryValue {
-name            [1]  String
-type            [2]  [RegistryValueKind]
-data            [3]  SEQUENCE of Byte
-access-control  [4]  [RegistrySecurity]  OPTIONAL
+  name            [1]  String
+  type            [2]  [RegistryValueKind]
+  data            [3]  SEQUENCE of Byte
+  access-control  [4]  [RegistrySecurity]  OPTIONAL
 }
 ```
 
@@ -749,8 +749,8 @@ RegistrySecurity {
 
 ```text
 RPORTFWD-BIND {
-port       [1]  UInt32
-localhost  [2]  Boolean
+  port       [1]  UInt32
+  localhost  [2]  Boolean
 }
 ```
 
@@ -946,11 +946,11 @@ Either store-index or assembly MUST be provided.
 
 ```text
 EXEC-ASM-REQ {
-store-index  [1]  Byte                OPTIONAL
-assembly     [2]  SEQUENCE of Byte    OPTIONAL
-arguments    [3]  SEQUENCE of String  OPTIONAL
-bypass-amsi  [4]  Boolean             OPTIONAL
-bypass-etw   [5]  Boolean             OPTIONAL
+  store-index  [1]  Byte                OPTIONAL
+  assembly     [2]  SEQUENCE of Byte    OPTIONAL
+  arguments    [3]  SEQUENCE of String  OPTIONAL
+  bypass-amsi  [4]  Boolean             OPTIONAL
+  bypass-etw   [5]  Boolean             OPTIONAL
 }
 ```
 
@@ -968,11 +968,11 @@ Either store-index or bof MUST be provided.
 
 ```text
 EXEC-BOF-REQ {
-store-index  [1]  Byte              OPTIONAL
-bof          [2]	SEQUENCE of Byte  OPTIONAL
-arguments    [3]	SEQUENCE of Byte  OPTIONAL
-bypass-amsi  [4]  Boolean           OPTIONAL
-bypass-etw   [5]  Boolean           OPTIONAL
+  store-index  [1]  Byte              OPTIONAL
+  bof          [2]  SEQUENCE of Byte  OPTIONAL
+  arguments    [3]  SEQUENCE of Byte  OPTIONAL
+  bypass-amsi  [4]  Boolean           OPTIONAL
+  bypass-etw   [5]  Boolean           OPTIONAL
 }
 ```
 
