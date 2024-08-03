@@ -1,3 +1,5 @@
+> Draft: Request for [Discussion](https://github.com/rasta-mouse/OST-C2-Spec/discussions)
+
 # Abstract
 
 This document provides an overview of Version 1 of the OST C&C Specification.  It is intended to provide a detailed description of messages and the fields within those messages.
