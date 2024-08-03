@@ -48,23 +48,17 @@ Each task request and response message MUST have the following 16-byte header.
 | -------------------------------------------------------------|
 ```
 
-### Type
-1-byte integer.  The ‘type’ of task this is, e.g. ‘change directory’, ‘list processes’, etc.  See [Task Types and Codes].
+- **Type** - 1-byte integer.  The ‘type’ of task this is, e.g. ‘change directory’, ‘list processes’, etc.  See [[Task Types and Codes](https://github.com/rasta-mouse/ost-c2-spec?tab=readme-ov-file#task-types-and-codes)].
 
-### Code
-1-byte integer.  A ‘sub code’ for the given Type, e.g ‘connect’, ‘read’, ‘write’, and ‘close’ for SOCKS.  See [Task Types and Codes].
+- **Code** - 1-byte integer.  A ‘sub code’ for the given Type, e.g ‘connect’, ‘read’, ‘write’, and ‘close’ for SOCKS.  See [[Task Types and Codes](https://github.com/rasta-mouse/ost-c2-spec?tab=readme-ov-file#task-types-and-codes)].
 
-### Flags
-2-byte integer.  A set of bitwise flags to describe the state of the message.  See [Task Flags].
+- **Flags** - 2-byte integer.  A set of bitwise flags to describe the state of the message.  See [[Task Flags](https://github.com/rasta-mouse/ost-c2-spec?tab=readme-ov-file#task-flags)].
 
-### Label
-4-byte integer.  A unique label to correlate multiple messages related to the same task.
+- **Label** - 4-byte integer.  A unique label to correlate multiple messages related to the same task.
 
-### Identifier
-4-byte integer.  A sequential identifier used to construct fragmented messages in the correct order.
+- **Identifier** - 4-byte integer.  A sequential identifier used to construct fragmented messages in the correct order.
 
-### Length
-4-byte integer.  The total length of the task data.
+- **Length** - 4-byte integer.  The total length of the task data.
 
 ## Task Types and Codes
 
@@ -175,7 +169,7 @@ Some flags are mutually exclusive and MUST NOT be set together (e.g. the encodin
 
 ## Task Data
 
-The task data is appended to the header and will consist of a serialised structure, depending on the specific task type and code.  Each task request and response message type are defined in [Message Definitions].
+The task data is appended to the header and will consist of a serialised structure, depending on the specific task type and code.  Each task request and response message type are defined in [[Message Definitions](https://github.com/rasta-mouse/ost-c2-spec?tab=readme-ov-file#message-definitions)].
 
 It is NOT MANDATORY for a task request or response to have any data if it is not required.
 
@@ -199,14 +193,9 @@ The task header and task data are combined and AES-encrypted with the implant’
 | ------------------------------------ |
 ```
 
-### Iv
-16-byte initialisation vector.
-
-### Checksum
-32-byte HMAC256 checksum.
-
-### Data
-The encrypted data.
+- **Iv** - 16-byte initialisation vector.
+- **Checksum** - 32-byte HMAC256 checksum.
+- **Data** - The encrypted data.
 
 # Message Exchanges
 
@@ -216,11 +205,11 @@ An implant MUST register itself with a team server before it can receive or send
 
 ### Generation of IMPLANT-METADATA
 
-The implant generates an [IMPLANT-METADATA] message, encrypts it with the team server’s public RSA key, and sends it to the team server.
+The implant generates an [[IMPLANT-METADATA](https://github.com/rasta-mouse/ost-c2-spec?tab=readme-ov-file#implant-metadata)] message, encrypts it with the team server’s public RSA key, and sends it to the team server.
 
 ### Receipt of IMPLANT-METADATA
 
-The team server uses its private RSA key to decrypt the implant’s [IMPLANT-METADATA] and MUST register it as a new session/callback.
+The team server uses its private RSA key to decrypt the implant’s [[IMPLANT-METADATA](https://github.com/rasta-mouse/ost-c2-spec?tab=readme-ov-file#implant-metadata)] and MUST register it as a new session/callback.
 
 ## Implant Check In
 
@@ -232,7 +221,7 @@ The method of check in is specific to the C2 channel and not covered under this 
 
 ### Check in Response
 
-If there are no pending tasks, a team server MAY respond with no data, or dummy data in the form of one or more [NOP] tasks.  Otherwise, it MUST respond with a collection of task requests that are AES-encrypted with the implant’s session key.
+If there are no pending tasks, a team server MAY respond with no data, or dummy data in the form of one or more [[NOP](https://github.com/rasta-mouse/ost-c2-spec?tab=readme-ov-file#nop)] tasks.  Otherwise, it MUST respond with a collection of task requests that are AES-encrypted with the implant’s session key.
 
 ## Peer-to-Peer
 
@@ -242,7 +231,7 @@ A child implant MUST write its metadata to the P2P channel (e.g. named pipe or T
 
 ### Generation of LINK-REP
 
-The parent MUST read this metadata and send it back to the team server in a [LINK-REP] message.
+The parent MUST read this metadata and send it back to the team server in a [[LINK-REP](https://github.com/rasta-mouse/ost-c2-spec?tab=readme-ov-file#link-rep)] message.
 
 ### Receipt of LINK-REP
 
@@ -250,11 +239,11 @@ The team server MUST decrypt the child’s metadata and register it as a new ses
 
 ### Generation of LINK-ACK
 
-The team server MUST send a [LINK-ACK] message back to the new parent to confirm the ID of the child.  The parent SHOULD use the message Label to correlate this process.
+The team server MUST send a [[LINK-ACK](https://github.com/rasta-mouse/ost-c2-spec?tab=readme-ov-file#link-ack)] message back to the new parent to confirm the ID of the child.  The parent SHOULD use the message Label to correlate this process.
 
 ### Child Tasks
 
-Tasks for child implants are wrapped in one or more [LINK-PASS-THRU] messages.  These will be encrypted with the parent implant’s session key.  Upon receipt, an implant MUST decrypt the message and forward the wrapped data to the child implant ID indicated by the child-id field.
+Tasks for child implants are wrapped in one or more [[LINK-PASS-THRU](https://github.com/rasta-mouse/ost-c2-spec?tab=readme-ov-file#link-pass-thru)] messages.  These will be encrypted with the parent implant’s session key.  Upon receipt, an implant MUST decrypt the message and forward the wrapped data to the child implant ID indicated by the child-id field.
 
 The wrapped data may be the task itself or another LINK-PASS-THRU if the child is another level down the chain.
 
@@ -276,7 +265,7 @@ Implementations MAY include message types, control codes, and flags that are not
 
 Implementations SHOULD gracefully handle receiving a message with fields or flags that it does not recognise and return an appropriate error message.
 
-## IMPLANT-METADATA Definition
+## IMPLANT-METADATA
 
 ```text
 IMPLANT-META {
@@ -306,7 +295,7 @@ Platform {
 }
 ```
 
-## TASK-ERROR Definition
+## TASK-ERROR
 
 ```text
 TASK-ERROR {
