@@ -647,7 +647,7 @@ InjectionTechnique {
 ### REG-QUERY-REQ
 
 ```text
-REQ-QUERY-REQ {
+REG-QUERY-REQ {
   hive            [1]  [RegistryHive]
   key             [2]  String          OPTIONAL
   value           [3]  String          OPTIONAL
@@ -658,7 +658,7 @@ REQ-QUERY-REQ {
 ### REG-QUERY-REP
 
 ```text
-REQ-QUERY-REP {
+REG-QUERY-REP {
   values  [1]  SEQUENCE of [RegistryValue]
   keys    [2]  SEQUENCE of [RegistryKey]
 }
@@ -1000,10 +1000,10 @@ EXEC-POSH-REQ {
 }
 ```
 
-### EXEC-POST-REP
+### EXEC-POSH-REP
 
 ```text
-EXEC-POST-REP {
+EXEC-POSH-REP {
   output  [1]  String
 }
 ```
