@@ -409,69 +409,69 @@ FILE-DOWNLOAD-REP {
 }
 ```
 
-### CHANGE-DIR-REQ
+### DIR-CHANGE-REQ
 
 ```text
-CHANGE-DIR-REQ {
+DIR-CHANGE-REQ {
   path  [1]  String
 }
 ```
 
-### CREATE-DIR-REQ
+### DIR-CREATE-REQ
 
 ```text
-CREATE-DIR-REQ {
+DIR-CREATE-REQ {
   path  [1]  String
 }
 ```
 
-### CREATE-DIR-REP
+### DIR-CREATE-REP
 
 ```text
-CREATE-DIR-REP {
+DIR-CREATE-REP {
   entry  [1]  [FileSystemEntry]
 }
 ```
 
-### COPY-DIR-REQ
+### DIR-COPYREQ
 
 ```text
-COPY-DIR-REQ {
+DIR-COPYREQ {
   source       [1]  String
   destination  [2]  String
 }
 ```
 
-### MOVE-DIR-REQ
+### DIR-MOVE-REQ
 
 ```text
-MOVE-DIR-REQ {
+DIR-MOVEREQ {
   source       [1] String
   destination  [2]  String
 }
 ```
 
-### LIST-DIR-REQ
+### DIR-LIST-REQ
 
 ```text
-LIST-DIR-REQ {
+DIR-LIST-REQ {
   path            [1]  String
   access-control  [2]  [FileSecurity]  OPTIONAL
 }
 ```
 
-### LIST-DIR-REP
+### DIR-LIST-REP
 
 ```text
-LIST-DIR-REP {
+DIR-LIST-REP {
   entries  [1]  SEQUENCE of [FileSystemEntry]
 }
 ```
 
-### DELETE-DIR-REQ
+### DIR-DELETE-REQ
 
 ```text
-DELETE-DIR-REQ {
+DIR-DELETE-REQ {
   path     [1]  String
   recurse  [2]  Boolean  OPTIONAL
   force    [3]  Boolean  OPTIONAL
