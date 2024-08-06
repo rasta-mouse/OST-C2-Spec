@@ -644,7 +644,7 @@ InjectionTechnique {
 
 ## Registry Definitions
 
-### REQ-QUERY-REQ
+### REG-QUERY-REQ
 
 ```text
 REQ-QUERY-REQ {
@@ -655,7 +655,7 @@ REQ-QUERY-REQ {
 }
 ```
 
-### REQ-QUERY-REP
+### REG-QUERY-REP
 
 ```text
 REQ-QUERY-REP {
@@ -664,7 +664,7 @@ REQ-QUERY-REP {
 }
 ```
 
-### REQ-ADD-REQ
+### REG-ADD-REQ
 
 ```text
 REG-ADD-REQ {
