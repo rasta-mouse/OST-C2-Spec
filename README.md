@@ -453,10 +453,12 @@ DIR-MOVEREQ {
 
 ### DIR-LIST-REQ
 
+If no path is specified, an implant SHOULD list its current working directory.
+
 ```text
 DIR-LIST-REQ {
-  path            [1]  String
-  access-control  [2]  [FileSecurity]  OPTIONAL
+  path            [1]  String   OPTIONAL
+  access-control  [2]  Boolean  OPTIONAL
 }
 ```
 
