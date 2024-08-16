@@ -272,14 +272,15 @@ IMPLANT-META {
   jitter         [3]   UInt32                   OPTIONAL
   session-key    [4]   SEQUENCE of Byte (32)
   username       [5]   String
-  hostname       [6]   String
-  internal-ips   [7]   SEQUENCE of Byte (4)
-  process-name   [8]   String
-  process-id     [9]   UInt32
-  architecture   [10]  [Architecture]
-  platform       [11]  [Platform]
-  os-description [12]  String                   OPTIONAL
-  integrity      [13]  [Integrity]
+  host-id        [6]   String                   OPTIONAL
+  hostname       [7]   String
+  internal-ips   [8]   SEQUENCE of Byte (4)
+  process-name   [9]   String
+  process-id     [10]  UInt32
+  architecture   [11]  [Architecture]
+  platform       [12]  [Platform]
+  os-description [13]  String                   OPTIONAL
+  integrity      [14]  [Integrity]
 }
 ```
 
