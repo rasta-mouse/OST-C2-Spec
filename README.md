@@ -265,9 +265,11 @@ Implementations SHOULD gracefully handle receiving a message with fields or flag
 
 ## IMPLANT-METADATA
 
+The `IMPLANT-METADATA` is one of the only structures in this specification that is not serialised using a standard such as JSON, XML, or Protobuf.  Its members are read in binary format, in the same order they were written.
+
 ```text
-IMPLANT-META {
-  id             [1]   Uint32
+IMPLANT-METADATA {
+  id             [1]   UInt32
   sleep          [2]   UInt32                   OPTIONAL
   jitter         [3]   UInt32                   OPTIONAL
   session-key    [4]   SEQUENCE of Byte (32)
@@ -283,6 +285,12 @@ IMPLANT-META {
   integrity      [14]  [Integrity]
 }
 ```
+
+Strings MAY be null-terminated but MUST be length-prefixed.  For example: `[ 5, 82, 97, 115, 116, 97 ]` would be interpreted as "Rasta", where 5 is the string length followed by each ASCII character.  If a string member is not provided (e.g. because it's OPTIONAL), a single null-byte MUST be written in its place.
+
+The sequence of internal IP addresses MUST also be length-prefixed and each IP written in network byte order.  For example: `[ 1, 192, 168, 0, 195]` would be interpreted as a single IP of 192.168.0.195; and `[ 2, 192, 168, 0, 195, 172, 17, 112, 1 ]` would be interpted as two IPs of 192.168.0.195 and 172.17.112.1.
+
+In both cases, the length prefix is limited to a single byte, so cannot accomodate a value larger than 255.
 
 ### Platform
 
@@ -434,10 +442,10 @@ DIR-CREATE-REP {
 }
 ```
 
-### DIR-COPYREQ
+### DIR-COPY-REQ
 
 ```text
-DIR-COPYREQ {
+DIR-COPY-REQ {
   source       [1]  String
   destination  [2]  String
 }
@@ -446,7 +454,7 @@ DIR-COPYREQ {
 ### DIR-MOVE-REQ
 
 ```text
-DIR-MOVEREQ {
+DIR-MOVE-REQ {
   source       [1] String
   destination  [2]  String
 }
@@ -586,10 +594,10 @@ PROC-INJ-SPAWN-REQ {
 }
 ```
 
-### PROC-INJ-EXPLIC-REQ
+### PROC-INJ-EXPLICIT-REQ
 
 ```text
-INJECT-EXPLIC-REQ {
+INJECT-EXPLICIT-REQ {
   process-id  [1]  UInt32
   shellcode   [2]  SEQUENCE of Byte
   technique   [3]  [InjectionTechnique]  OPTIONAL
