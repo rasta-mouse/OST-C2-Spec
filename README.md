@@ -306,7 +306,7 @@ Platform {
 
 ```text
 TASK-ERROR {
-  error-code  [1]  Uint32
+  error-code  [1]  UInt32
   message     [2]  String  OPTIONAL
 }
 ```
@@ -817,7 +817,7 @@ ENV-SET-REQ {
 ```text
 SOCKS-CONNECT-REQ {
   target  [1]  SEQUENCE of Byte  (4)
-  port    [2]  Uint32
+  port    [2]  UInt32
 }
 ```
 
