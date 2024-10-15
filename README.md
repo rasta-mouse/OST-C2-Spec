@@ -328,7 +328,7 @@ NOP {
 ```text
 SET-SLEEP-REQ {
   sleep   [1]  UInt32
-  jitter  [2]  UInt32  OPTIONAL
+  jitter  [2]  Byte    OPTIONAL
 }
 ```
 
