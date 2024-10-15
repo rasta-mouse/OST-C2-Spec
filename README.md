@@ -327,8 +327,8 @@ NOP {
 
 ```text
 SET-SLEEP-REQ {
-  sleep   [1]  UInt32
-  jitter  [2]  Byte    OPTIONAL
+  interval  [1]  UInt32
+  jitter    [2]  Byte    OPTIONAL
 }
 ```
 
@@ -455,7 +455,7 @@ DIR-COPY-REQ {
 
 ```text
 DIR-MOVE-REQ {
-  source       [1] String
+  source       [1]  String
   destination  [2]  String
 }
 ```
