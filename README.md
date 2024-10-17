@@ -411,10 +411,9 @@ FILE-DOWNLOAD-REQ {
 
 ```text
 FILE-DOWNLOAD-REP {
-  file-length    [1]  UInt32
-  current-chuck  [2]  UInt16
-  total-chunks   [3]  UInt16
-  chunk-content  [4]  SEQUENCE of Byte
+  current-chuck  [1]  UInt16
+  total-chunks   [2]  UInt16
+  chunk-content  [3]  SEQUENCE of Byte
 }
 ```
 
