@@ -412,11 +412,13 @@ FILE-DOWNLOAD-REQ {
 ```text
 FILE-DOWNLOAD-REP {
   file-length    [1]  UInt32
-  current-chuck  [2]  Byte
-  total-chunks   [3]  Byte
+  current-chuck  [2]  UInt16
+  total-chunks   [3]  UInt16
   chunk-content  [4]  SEQUENCE of Byte
 }
 ```
+
+The maximum file size that can be downloaded using this scheme is ~4GB.
 
 ### DIR-CHANGE-REQ
 
