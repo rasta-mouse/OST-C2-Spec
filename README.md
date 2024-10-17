@@ -6,9 +6,7 @@ This document provides an overview of Version 1 of the OST C&C Specification.  I
 
 # Introduction
 
-The motivation behind this specification is to improve interoperability between C&C frameworks without requiring cumbersome translation layers.  The goal is for frameworks to implement a standard set of message structures so that implants generated from one framework can be controlled natively from another.  This includes tasking, structured output, and peer-to-peer routing.
-
-This document is not intended to describe what C&C is.  It is assumed the reader understands what it is and what it is used for.
+The motivation behind this specification is to provide a C&C messaging protocol (including tasking, structured output, and peer-to-peer routing) that can be implemented verbatim, or simply serve as inspiration for project developers.  This document is not intended to describe what C&C is.  It is assumed the reader understands what it is and what it is used for.
 
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" are to be interpreted as described in [[RFC2119](https://datatracker.ietf.org/doc/html/rfc2119)].
 
@@ -46,16 +44,11 @@ Each task request and response message MUST have the following 16-byte header.
 | -------------------------------------------------------------|
 ```
 
-- **Type**: 1-byte integer.  The ‘type’ of task this is, e.g. ‘change directory’, ‘list processes’, etc.  See [[Task Types and Codes](https://github.com/rasta-mouse/ost-c2-spec?tab=readme-ov-file#task-types-and-codes)].
-
-- **Code**: 1-byte integer.  A ‘sub code’ for the given Type, e.g ‘connect’, ‘read’, ‘write’, and ‘close’ for SOCKS.  See [[Task Types and Codes](https://github.com/rasta-mouse/ost-c2-spec?tab=readme-ov-file#task-types-and-codes)].
-
+- **Type**: 1-byte integer.  The 'type' of task this is.  See [[Task Types and Codes](https://github.com/rasta-mouse/ost-c2-spec?tab=readme-ov-file#task-types-and-codes)].
+- **Code**: 1-byte integer.  A 'sub code' for the given Type.  See [[Task Types and Codes](https://github.com/rasta-mouse/ost-c2-spec?tab=readme-ov-file#task-types-and-codes)].
 - **Flags**: 2-byte integer.  A set of bitwise flags to describe the state of the message.  See [[Task Flags](https://github.com/rasta-mouse/ost-c2-spec?tab=readme-ov-file#task-flags)].
-
 - **Label**: 4-byte integer.  A unique label to correlate multiple messages related to the same task.
-
 - **Identifier**: 4-byte integer.  A sequential identifier used to construct fragmented messages in the correct order.
-
 - **Length**: 4-byte integer.  The total length of the task data.
 
 ## Task Types and Codes
@@ -150,7 +143,7 @@ Each task request and response message MUST have the following 16-byte header.
 
 ## Task Flags
 
-Some flags are mutually exclusive and MUST NOT be set together (e.g. the encoding flags).  If no flags are set, a task SHOULD be assumed to have completed successfully and NOT fragmented.
+Some flags are mutually exclusive and MUST NOT be set together.  If no flags are set, a task SHOULD be assumed to have completed successfully and the associated output (if any) is NOT fragmented.
 
 ```text
 | Value | Description                              |
@@ -160,20 +153,17 @@ Some flags are mutually exclusive and MUST NOT be set together (e.g. the encodin
 | 2     | Task Running (as job)                    |
 | 4     | Message is fragmented, more to follow    |
 | 8     | Message is fragmented, no more to follow |
-| 16    | Data is JSON encoded                     |
-| 32    | Data is XML encoded                      |
-| 64    | Data is Protobuf encoded                 |
 ```
 
 ## Task Data
 
-The task data is appended to the header and will consist of a serialised structure, depending on the specific task type and code.  Each task request and response message type are defined in [[Message Definitions](https://github.com/rasta-mouse/ost-c2-spec?tab=readme-ov-file#message-definitions)].
+The task data is appended to the header and will consist of a binary structure, depending on the specific task type and code.  Each task request and response message type are defined in [[Message Definitions](https://github.com/rasta-mouse/ost-c2-spec?tab=readme-ov-file#message-definitions)].
 
 It is NOT MANDATORY for a task request or response to have any data if it is not required.
 
 ## Encrypted Task Message
 
-The task header and task data are combined and AES-encrypted with the implant’s session key.
+Prior to transmission, the task header and task data are combined and AES-encrypted with the implant's session key.
 
 ```text
 | Byte | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 |
@@ -181,8 +171,8 @@ The task header and task data are combined and AES-encrypted with the implant’
 |  0   |            Iv                 |
 |  8   |                               |
 | ------------------------------------ |
-|  16  |                               |
-|  24  |          Checksum             |
+|  16  |          Checksum             |
+|  24  |                               |
 |  32  |                               |
 |  40  |                               |
 | ------------------------------------ |
@@ -203,23 +193,23 @@ An implant MUST register itself with a team server before it can receive or send
 
 ### Generation of IMPLANT-METADATA
 
-The implant generates an [[IMPLANT-METADATA](https://github.com/rasta-mouse/ost-c2-spec?tab=readme-ov-file#implant-metadata)] message, encrypts it with the team server’s public RSA key, and sends it to the team server.
+The implant generates an [[IMPLANT-METADATA](https://github.com/rasta-mouse/ost-c2-spec?tab=readme-ov-file#implant-metadata)] message, encrypts it with the team server's public RSA key, and sends it to the team server.
 
 ### Receipt of IMPLANT-METADATA
 
-The team server uses its private RSA key to decrypt the implant’s [[IMPLANT-METADATA](https://github.com/rasta-mouse/ost-c2-spec?tab=readme-ov-file#implant-metadata)] and MUST register it as a new session/callback.
+The team server uses its private RSA key to decrypt the implant's [[IMPLANT-METADATA](https://github.com/rasta-mouse/ost-c2-spec?tab=readme-ov-file#implant-metadata)] and MUST register it as a new session/callback.
 
 ## Implant Check In
 
-An implant MUST “check in” with the team server to receive any pending task data for itself or child descendants.
+An implant MUST "check-in" with the team server to receive any pending task data for itself or children.
 
-### Check in Request
+### Check-In Request
 
-The method of check in is specific to the C2 channel and not covered under this specification.  A registered implant MAY only send its ID to check in.  However, if the implant has since changed its session key, it MUST also re-send its metadata.
+The method of check-in is specific to the C2 channel and not covered under this specification.  A registered implant MAY only send its ID to check in.  However, if the implant has since changed its session key, sleep, or jitter configuration, it MUST also re-send its metadata.
 
-### Check in Response
+### Check-In Response
 
-If there are no pending tasks, a team server MAY respond with no data, or dummy data in the form of one or more [[NOP](https://github.com/rasta-mouse/ost-c2-spec?tab=readme-ov-file#nop)] tasks.  Otherwise, it MUST respond with a collection of task requests that are AES-encrypted with the implant’s session key.
+If there are no pending tasks, a team server MAY respond with no data, or dummy data in the form of one or more [[NOP](https://github.com/rasta-mouse/ost-c2-spec?tab=readme-ov-file#nop)] messages.  Otherwise, it MUST respond with a collection of task requests that are AES-encrypted with the implant's session key.
 
 ## Peer-to-Peer
 
@@ -233,7 +223,7 @@ The parent MUST read this metadata and send it back to the team server in a [[LI
 
 ### Receipt of LINK-REP
 
-The team server MUST decrypt the child’s metadata and register it as a new session/callback or update the existing parent-child relationships in the case of an unlink & link.
+The team server MUST decrypt the child's metadata and register it as a new session/callback or update the existing parent-child relationships in the case of an unlink & link.
 
 ### Generation of LINK-ACK
 
@@ -241,19 +231,28 @@ The team server MUST send a [[LINK-ACK](https://github.com/rasta-mouse/ost-c2-sp
 
 ### Child Tasks
 
-Tasks for child implants are wrapped in one or more [[LINK-PASS-THRU](https://github.com/rasta-mouse/ost-c2-spec?tab=readme-ov-file#link-pass-thru)] messages.  These will be encrypted with the parent implant’s session key.  Upon receipt, an implant MUST decrypt the message and forward the wrapped data to the child implant ID indicated by the child-id field.
+Tasks for child implants are wrapped in one or more [[LINK-PASS-THRU](https://github.com/rasta-mouse/ost-c2-spec?tab=readme-ov-file#link-pass-thru)] messages.  These will be encrypted with the parent's session key.  Upon receipt, the parent MUST decrypt the message and forward the wrapped data to the child implant indicated by the `child-id` field.
 
-The wrapped data may be the task itself or another LINK-PASS-THRU if the child is another level down the chain.
+The wrapped data may be the task itself or another `LINK-PASS-THRU` if the child is another level down the chain.
 
 # Message Definitions
 
-## Optional Integer Fields
-
-Some languages do not distinguish between an omitted integer value and a transmitted value of zero.  For consistency, implementations SHOULD treat omitted values as having been transmitted with a value of zero.
-
 ## Timestamp Fields
 
-Timestamps are unsigned 64-bit integers which represents the UNIX epoch (the number of seconds that have elapsed since 1 January 1970).
+All `Timestamp` fields are transmitted as unsigned 64-bit integers (UInt64) that represent the UNIX epoch (the number of seconds that have elapsed since 1 January 1970).
+
+## Optional Fields
+
+Some languages do not distinguish between an omitted value and a transmitted value of zero.  For consistency, implementions MUST prepend OPTIONAL fields with a `1` or `0` byte (i.e. `TRUE` or `FALSE`) to indicate whether the value is present or not.
+
+## Length-Prefixed Fields
+
+It's not always possible to know when one field ends and another begins when reading data from a binary stream.  This specification mandates the use of prefixing a length value to the start of these fields so that implementations know how many bytes that field contains.  The following data types MUST be length-prefixed:
+
+- String (MAY also be null-terminated, but not required)
+- Sequence of X where the length is not statically defined
+- IPV4-ADDRESS
+- IPV6-ADDRESS
 
 ## Extending the Specification
 
@@ -265,32 +264,43 @@ Implementations SHOULD gracefully handle receiving a message with fields or flag
 
 ## IMPLANT-METADATA
 
-The `IMPLANT-METADATA` is one of the only structures in this specification that is not serialised using a standard such as JSON, XML, or Protobuf.  Its members are read in binary format, in the same order they were written.
-
 ```text
 IMPLANT-METADATA {
   id             [1]   UInt32
-  sleep          [2]   UInt32                   OPTIONAL
-  jitter         [3]   UInt32                   OPTIONAL
+  sleep          [2]   UInt32                    OPTIONAL
+  jitter         [3]   UInt32                    OPTIONAL
   session-key    [4]   SEQUENCE of Byte (32)
   username       [5]   String
-  host-id        [6]   String                   OPTIONAL
+  host-id        [6]   String                    OPTIONAL
   hostname       [7]   String
-  internal-ips   [8]   SEQUENCE of Byte (4)
+  ipv4-ips       [8]   SEQUENCE of IPV4-ADDRESS
+  ipv6-ips       [9]   SEQUENCE of IPV6-ADDRESS  OPTIONAL
   process-name   [9]   String
   process-id     [10]  UInt32
   architecture   [11]  [Architecture]
   platform       [12]  [Platform]
-  os-description [13]  String                   OPTIONAL
+  os-description [13]  String                    OPTIONAL
   integrity      [14]  [Integrity]
 }
 ```
 
-Strings MAY be null-terminated but MUST be length-prefixed.  For example: `[ 5, 82, 97, 115, 116, 97 ]` would be interpreted as "Rasta", where 5 is the string length followed by each ASCII character.  If a string member is not provided (e.g. because it's OPTIONAL), a single null-byte MUST be written in its place.
+### IPv4
 
-The sequence of internal IP addresses MUST also be length-prefixed and each IP written in network byte order.  For example: `[ 1, 192, 168, 0, 195]` would be interpreted as a single IP of 192.168.0.195; and `[ 2, 192, 168, 0, 195, 172, 17, 112, 1 ]` would be interpted as two IPs of 192.168.0.195 and 172.17.112.1.
+```text
+IPV4-ADDRESS {
+  address  [1]  SEQUENCE of Byte (4)
+}
+```
 
-In both cases, the length prefix is limited to a single byte, so cannot accomodate a value larger than 255.
+### IPv6
+
+```text
+IPV6-ADDRESS {
+  address  [1]  SEQUENCE of Byte (16)
+}
+```
+
+**Note:** IP Address MUST be transmitted in network-byte order.
 
 ### Platform
 
@@ -334,7 +344,7 @@ SET-SLEEP-REQ {
 
 ### SET-SPAWNTO-REQ
 
-If the `spawnto` field is NOT set, the implant SHOULD revert to its default configuration.
+If the `spawnto` field is *not* set, the implant SHOULD revert to its default configuration.
 
 ```text
 SET-SPAWNTO-REQ {
@@ -344,7 +354,7 @@ SET-SPAWNTO-REQ {
 
 ### SET-BLOCKDLLS-REQ
 
-If the `blockdlls` field is NOT set, the implant SHOULD revert to its default configuration.
+If the `blockdlls` field is *not* set, the implant SHOULD revert to its default configuration.
 
 ```text
 SET-BLOCKDLLS-REQ {
@@ -354,7 +364,7 @@ SET-BLOCKDLLS-REQ {
 
 ### SET-PPID-REQ
 
-If the `ppid` field is NOT set, the implant SHOULD revert to its default configuration.
+If the `ppid` field is *not* set, the implant SHOULD revert to its default configuration.
 
 ```text
 SET-PPID-REQ {
@@ -416,8 +426,6 @@ FILE-DOWNLOAD-REP {
   chunk-content  [3]  SEQUENCE of Byte
 }
 ```
-
-The maximum file size that can be downloaded using this scheme is ~4GB.
 
 ### DIR-CHANGE-REQ
 
