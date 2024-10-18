@@ -300,7 +300,7 @@ IPV6-ADDRESS {
 }
 ```
 
-**Note:** IP Address MUST be transmitted in network-byte order.
+IP Address MUST be transmitted in network-byte order.
 
 ### Platform
 
@@ -344,17 +344,15 @@ SET-SLEEP-REQ {
 
 ### SET-SPAWNTO-REQ
 
-If the `spawnto` field is *not* set, the implant SHOULD revert to its default configuration.
-
 ```text
 SET-SPAWNTO-REQ {
   spawnto  [1]  String  OPTIONAL
 }
 ```
 
-### SET-BLOCKDLLS-REQ
+If the `spawnto` field is *not* set, the implant SHOULD revert to its default configuration.
 
-If the `blockdlls` field is *not* set, the implant SHOULD revert to its default configuration.
+### SET-BLOCKDLLS-REQ
 
 ```text
 SET-BLOCKDLLS-REQ {
@@ -362,15 +360,17 @@ SET-BLOCKDLLS-REQ {
 }
 ```
 
-### SET-PPID-REQ
+If the `blockdlls` field is *not* set, the implant SHOULD revert to its default configuration.
 
-If the `ppid` field is *not* set, the implant SHOULD revert to its default configuration.
+### SET-PPID-REQ
 
 ```text
 SET-PPID-REQ {
   ppid  [1]  UInt32  OPTIONAL
 }
 ```
+
+If the `ppid` field is *not* set, the implant SHOULD revert to its default configuration.
 
 ## FileSystem Definitions
 
@@ -431,9 +431,11 @@ FILE-DOWNLOAD-REP {
 
 ```text
 DIR-CHANGE-REQ {
-  path  [1]  String
+  path  [1]  String  OPTIONAL
 }
 ```
+
+If the `path` field is *not* set, the implant SHOULD change it's working directory to a 'default' location (e.g. the user's home directory).
 
 ### DIR-CREATE-REQ
 
@@ -471,14 +473,14 @@ DIR-MOVE-REQ {
 
 ### DIR-LIST-REQ
 
-If no path is specified, an implant SHOULD list its current working directory.
-
 ```text
 DIR-LIST-REQ {
   path            [1]  String   OPTIONAL
   access-control  [2]  Boolean  OPTIONAL
 }
 ```
+
+If the `path` field is *not* set, the implant SHOULD list its current working directory.
 
 ### DIR-LIST-REP
 
