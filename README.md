@@ -380,6 +380,7 @@ If the `ppid` field is *not* set, the implant SHOULD revert to its default confi
 FILE-COPY-REQ {
   source       [1]  String
   destination  [2]  String
+  force        [3]  Boolean  OPTIONAL
 }
 ```
 
