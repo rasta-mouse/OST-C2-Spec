@@ -505,7 +505,6 @@ DIR-LIST-REP {
 DIR-DELETE-REQ {
   path     [1]  String
   recurse  [2]  Boolean  OPTIONAL
-  force    [3]  Boolean  OPTIONAL
 }
 ```
 
