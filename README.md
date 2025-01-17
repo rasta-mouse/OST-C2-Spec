@@ -431,7 +431,7 @@ FILE-DOWNLOAD-REP {
 
 ```text
 DIR-PRINT-REP {
-  directory  [1]  String
+  path  [1]  String
 }
 ```
 
