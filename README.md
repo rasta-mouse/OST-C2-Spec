@@ -427,6 +427,14 @@ FILE-DOWNLOAD-REP {
 }
 ```
 
+### DIR-PRINT-REP
+
+```text
+DIR-PRINT-REP {
+  directory  [1]  String
+}
+```
+
 ### DIR-CHANGE-REQ
 
 ```text
