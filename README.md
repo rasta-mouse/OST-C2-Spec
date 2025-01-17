@@ -513,7 +513,7 @@ DIR-DELETE-REQ {
 ```text
 FileSystemEntry {
   path            [1]  String
-  length          [2]  UInt32
+  length          [2]  UInt32            OPTIONAL
   attributes      [3]  [FileAttributes]  OPTIONAL
   owner           [4]  String            OPTIONAL
   created         [5]  Timestamp         OPTIONAL
