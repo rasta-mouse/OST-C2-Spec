@@ -608,8 +608,8 @@ PROC-KILL-REQ {
 
 ```text
 PROC-INJ-SPAWN-REQ {
-  shellcode  [1]  SEQUENCE of Byte
-  technique  [2]  [InjectionTechnique]  OPTIONAL
+  shellcode   [1]  SEQUENCE of Byte
+  capability  [2]  SEQUENCE of Byte
 }
 ```
 
@@ -619,7 +619,7 @@ PROC-INJ-SPAWN-REQ {
 INJECT-EXPLICIT-REQ {
   process-id  [1]  UInt32
   shellcode   [2]  SEQUENCE of Byte
-  technique   [3]  [InjectionTechnique]  OPTIONAL
+  capability  [3]  SEQUENCE of Byte
 }
 ```
 
@@ -658,17 +658,6 @@ Integrity {
   Medium    = 2,  // user
   High      = 3,  // sudoers
   System    = 4   // root
-}
-```
-
-### InjectionTechnique
-
-```text
-InjectionTechnique {
-  CreateThread        = 0,
-  QueueUserApc        = 1,
-  SetThreadContext    = 2,
-  RtlCreateUserThread = 3
 }
 ```
 
