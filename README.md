@@ -239,7 +239,7 @@ The wrapped data may be the task itself or another `LINK-PASS-THRU` if the child
 
 ## Timestamp Fields
 
-All `Timestamp` fields are transmitted as unsigned 64-bit integers (UInt64) that represent the UNIX epoch (the number of seconds that have elapsed since 1 January 1970).
+All `Timestamp` fields are transmitted as signed 64-bit integers (Int64) that represent the UNIX epoch (the number of seconds that have elapsed since 1 January 1970).
 
 ## Optional Fields
 
@@ -247,16 +247,16 @@ Some languages do not distinguish between an omitted value and a transmitted val
 
 ## Length-Prefixed Fields
 
-It's not always possible to know when one field ends and another begins when reading data from a binary stream.  This specification mandates the use of prefixing a length value to the start of these fields so that implementations know how many bytes that field contains.  The following data types MUST be length-prefixed:
+It's not always possible to know when one field ends and another begins when reading data from a binary stream.  This specification mandates the use of prefixing a length value to these fields, so that implementations know how many bytes, or how many elements, that field contains.  The following data types MUST be length-prefixed:
 
-- String (MAY also be null-terminated, but not required)
-- Sequence of X where the length is not statically defined
-- IPV4-ADDRESS
-- IPV6-ADDRESS
+- String (MAY also be null-terminated, but not required).
+- SEQUENCEs where the length is not statically defined.
+- IPV4-ADDRESS.
+- IPV6-ADDRESS.
 
 ## Extending the Specification
 
-Implementations MAY include message types, control codes, and flags that are not defined in this specification, as per their unique design and functionality.  It is RECOMMENDED to use values that are on the higher end of the unreserved pool to reduce the chance of them being assigned in a future revision.  Implementations MUST NOT use a type, code, or flag that is defined for anything other than its intended purpose.
+Implementations MAY include message types, control codes, and flags that are not defined in this specification, as per their unique design and functionality.  However, it is RECOMMENDED to use values that are on the higher end of the unreserved pool to reduce the chance of them being assigned in a future revision.  Implementations MUST NOT use a type, code, or flag that is defined for anything other than its intended purpose.
 
 ### Unrecognised Messages
 
@@ -267,24 +267,24 @@ Implementations SHOULD gracefully handle receiving a message with fields or flag
 ```text
 IMPLANT-METADATA {
   id             [1]   UInt32
-  sleep          [2]   UInt32                    OPTIONAL
-  jitter         [3]   UInt32                    OPTIONAL
-  session-key    [4]   SEQUENCE of Byte (32)
-  username       [5]   String
+  session-key    [2]   SEQUENCE of Byte (32)
+  sleep          [3]   UInt32                    OPTIONAL
+  jitter         [4]   UInt32                    OPTIONAL
+  username       [5]   String                    OPTIONAL
   host-id        [6]   String                    OPTIONAL
-  hostname       [7]   String
-  ipv4-ips       [8]   SEQUENCE of IPV4-ADDRESS
+  hostname       [7]   String                    OPTIONAL
+  ipv4-ips       [8]   SEQUENCE of IPV4-ADDRESS  OPTIONAL
   ipv6-ips       [9]   SEQUENCE of IPV6-ADDRESS  OPTIONAL
-  process-name   [9]   String
-  process-id     [10]  UInt32
-  architecture   [11]  [Architecture]
-  platform       [12]  [Platform]
-  os-description [13]  String                    OPTIONAL
-  integrity      [14]  [Integrity]
+  process-name   [10]  String                    OPTIONAL
+  process-id     [11]  UInt32                    OPTIONAL
+  architecture   [12]  [Architecture]            OPTIONAL
+  platform       [13]  [Platform]                OPTIONAL
+  os-description [14]  String                    OPTIONAL
+  integrity      [15]  [Integrity]               OPTIONAL
 }
 ```
 
-### IPv4
+### IPV4-ADDRESS
 
 ```text
 IPV4-ADDRESS {
@@ -292,7 +292,7 @@ IPV4-ADDRESS {
 }
 ```
 
-### IPv6
+### IPV6-ADDRESS
 
 ```text
 IPV6-ADDRESS {
@@ -300,7 +300,7 @@ IPV6-ADDRESS {
 }
 ```
 
-IP Address MUST be transmitted in network-byte order.
+IP Addresses MUST be transmitted in network-byte order.
 
 ### Platform
 
@@ -513,13 +513,13 @@ DIR-DELETE-REQ {
 ```text
 FileSystemEntry {
   path            [1]  String
-  length          [2]  UInt32            OPTIONAL
-  attributes      [3]  [FileAttributes]  OPTIONAL
-  owner           [4]  String            OPTIONAL
-  created         [5]  Timestamp         OPTIONAL
-  last-accessed   [6]  Timestamp         OPTIONAL
-  last-written    [7]  Timestamp         OPTIONAL
-  access-control  [8]  [FileSecurity]    OPTIONAL
+  length          [2]  UInt32                      OPTIONAL
+  attributes      [3]  [FileAttributes]            OPTIONAL
+  owner           [4]  String                      OPTIONAL
+  created         [5]  Timestamp                   OPTIONAL
+  last-accessed   [6]  Timestamp                   OPTIONAL
+  last-written    [7]  Timestamp                   OPTIONAL
+  access-control  [8]  SEQUENCE of [FileSecurity]  OPTIONAL
 }
 ```
 
@@ -735,7 +735,7 @@ RegistryValue {
   name            [1]  String
   type            [2]  [RegistryValueKind]
   data            [3]  SEQUENCE of Byte
-  access-control  [4]  [RegistrySecurity]  OPTIONAL
+  access-control  [4]  SEQUENCE of [RegistrySecurity]  OPTIONAL
 }
 ```
 
@@ -824,7 +824,7 @@ ENV-SET-REQ {
 
 ```text
 SOCKS-CONNECT-REQ {
-  target  [1]  SEQUENCE of Byte  (4)
+  target  [1]  SEQUENCE of Byte (4)
   port    [2]  UInt32
 }
 ```
