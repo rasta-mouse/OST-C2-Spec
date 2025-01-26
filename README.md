@@ -689,9 +689,8 @@ REG-QUERY-REP {
 REG-ADD-REQ {
   hive   [1]  [RegistryHive]
   key    [2]  String
-  value  [3]  [RegistryValueKind]
-  type   [4]  String
-  value  [5]  SEQUENCE of Byte
+  kind   [3]  [RegistryValueKind]
+  value  [4]  SEQUENCE of Byte
 }
 ```
 
@@ -701,8 +700,6 @@ REG-ADD-REQ {
 REG-DELETE-REQ {
   hive   [1]  [RegistryHive]
   key    [2]  String
-  value  [3]  String          OPTIONAL
-  force  [4]  Boolean         OPTIONAL
 }
 ```
 
@@ -722,9 +719,8 @@ RegistryHive {
 
 ```text
 RegistryKey {
-  hive            [1]  [RegistryHive]
-  name            [2]  String
-  access-control  [3]  [RegistrySecurity]  OPTIONAL
+  name            [1]  String
+  access-control  [2]  [RegistrySecurity]  OPTIONAL
 }
 ```
 
