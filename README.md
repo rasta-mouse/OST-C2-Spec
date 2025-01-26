@@ -689,8 +689,8 @@ REG-QUERY-REP {
 REG-ADD-REQ {
   hive   [1]  [RegistryHive]
   key    [2]  String
-  kind   [3]  [RegistryValueKind]
-  value  [4]  SEQUENCE of Byte
+  kind   [3]  [RegistryValueKind]  OPTIONAL
+  value  [4]  SEQUENCE of Byte     OPTIONAL
 }
 ```
 
