@@ -273,14 +273,15 @@ IMPLANT-METADATA {
   username       [5]   String                    OPTIONAL
   host-id        [6]   String                    OPTIONAL
   hostname       [7]   String                    OPTIONAL
-  ipv4-ips       [8]   SEQUENCE of IPV4-ADDRESS  OPTIONAL
-  ipv6-ips       [9]   SEQUENCE of IPV6-ADDRESS  OPTIONAL
-  process-name   [10]  String                    OPTIONAL
-  process-id     [11]  UInt32                    OPTIONAL
-  architecture   [12]  [Architecture]            OPTIONAL
-  platform       [13]  [Platform]                OPTIONAL
-  os-description [14]  String                    OPTIONAL
-  integrity      [15]  [Integrity]               OPTIONAL
+  domain         [8]   String                    OPTIONAL
+  ipv4-ips       [9]   SEQUENCE of IPV4-ADDRESS  OPTIONAL
+  ipv6-ips       [10]  SEQUENCE of IPV6-ADDRESS  OPTIONAL
+  process-name   [11]  String                    OPTIONAL
+  process-id     [12]  UInt32                    OPTIONAL
+  architecture   [13]  [Architecture]            OPTIONAL
+  platform       [14]  [Platform]                OPTIONAL
+  os-description [15]  String                    OPTIONAL
+  integrity      [16]  [Integrity]               OPTIONAL
 }
 ```
 
