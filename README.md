@@ -919,6 +919,14 @@ STORE-ADD-ITEM-REQ {
 }
 ```
 
+### STORE-DELETE-ITEM Definition
+
+```text
+STORE-DELETE-ITEM-REQ {
+  index  [1]  Byte
+}
+```
+
 ### StoreItem
 
 ```text
