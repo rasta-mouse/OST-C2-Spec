@@ -909,7 +909,7 @@ STORE-LIST-REP {
 }
 ```
 
-### ADD-STORE-ITEM Definition
+### STORE-ADD-ITEM Definition
 
 ```text
 STORE-ADD-ITEM-REQ {
