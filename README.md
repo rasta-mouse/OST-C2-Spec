@@ -925,6 +925,7 @@ STORE-ADD-ITEM-REQ {
 StoreItem {
   index  [1]  Byte
   name   [2]  String
+  type   [3]  [StoreItemType]
 }
 ```
 
