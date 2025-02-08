@@ -883,7 +883,7 @@ TOKEN-USE-REQ {
 ### TOKEN-DELETE-REQ
 
 ```text
-TOKEN-STEAL-REQ {
+TOKEN-DELETE-REQ {
   index  [1]  Byte
 }
 ```
