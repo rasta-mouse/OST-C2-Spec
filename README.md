@@ -901,10 +901,10 @@ Token {
 
 ## Implant Store Definitions
 
-### LIST-STORE-REP
+### STORE-LIST-REP
 
 ```text
-LIST-STORE-REP {
+STORE-LIST-REP {
   items  [1]  SEQUENCE of [StoreItem]
 }
 ```
@@ -912,7 +912,7 @@ LIST-STORE-REP {
 ### ADD-STORE-ITEM Definition
 
 ```text
-ADD-STORE-ITEM-REQ {
+STORE-ADD-ITEM-REQ {
   item  [1]  SEQUENCE of Byte
   name  [2]  String
   type  [3]  [StoreItemType]
