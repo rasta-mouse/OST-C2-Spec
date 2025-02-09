@@ -773,18 +773,10 @@ RPORTFWD-BIND {
 }
 ```
 
-### RPORTFWD-READ
+### RPORTFWD-DATA
 
 ```text
-RPORTFWD-READ {
-  data  [1]  SEQUENCE of Byte
-}
-```
-
-### RPORTFWD-WRITE
-
-```text
-RPORTFWD-WRITE {
+RPORTFWD-DATA {
   data  [1]  SEQUENCE of Byte
 }
 ```
