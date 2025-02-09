@@ -769,7 +769,7 @@ RegistrySecurity {
 ```text
 RPORTFWD-BIND {
   port       [1]  UInt16
-  localhost  [2]  Boolean
+  localhost  [2]  Boolean  OPTIONAL
 }
 ```
 
