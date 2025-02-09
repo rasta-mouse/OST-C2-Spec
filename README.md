@@ -768,7 +768,7 @@ RegistrySecurity {
 
 ```text
 RPORTFWD-BIND {
-  port       [1]  UInt32
+  port       [1]  UInt16
   localhost  [2]  Boolean
 }
 ```
@@ -823,7 +823,7 @@ ENV-SET-REQ {
 ```text
 SOCKS-CONNECT-REQ {
   target  [1]  SEQUENCE of Byte (4)
-  port    [2]  UInt32
+  port    [2]  UInt16
 }
 ```
 
