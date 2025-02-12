@@ -91,10 +91,9 @@ Each task request and response message MUST have the following 16-byte header.
 |                  | 1 - Add                  |
 |                  | 2 - Delete               |
 |------------------|--------------------------|
-| 8 - RPortFwd     | 0 - Bind                 |
-|                  | 1 - Read                 |
-|                  | 2 - Write                |
-|                  | 3 - Close                |
+| 8 - RPortFwd     | 0 - Start                |
+|                  | 1 - Data                 |
+|                  | 2 - Stop                 |
 |------------------|--------------------------|
 | 9 - Environment  | 0 - Get                  |
 |                  | 1 - Set                  |
@@ -764,27 +763,21 @@ RegistrySecurity {
 
 ## Reverse Port Forward Definitions
 
-### RPORTFWD-BIND
+### RPORTFWD-START
 
 ```text
-RPORTFWD-BIND {
-  port       [1]  UInt32
-  localhost  [2]  Boolean
+RPORTFWD-START {
+  bind-port       [1]  UInt16
+  localhost-only  [2]  Boolean  OPTIONAL
+  forward-host    [3]  String
+  forward-port    [4]  UInt16
 }
 ```
 
-### RPORTFWD-READ
+### RPORTFWD-DATA
 
 ```text
-RPORTFWD-READ {
-  data  [1]  SEQUENCE of Byte
-}
-```
-
-### RPORTFWD-WRITE
-
-```text
-RPORTFWD-WRITE {
+RPORTFWD-DATA {
   data  [1]  SEQUENCE of Byte
 }
 ```
