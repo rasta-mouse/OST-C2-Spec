@@ -816,7 +816,7 @@ ENV-SET-REQ {
 ```text
 SOCKS-CONNECT-REQ {
   target  [1]  SEQUENCE of Byte (4)
-  port    [2]  UInt32
+  port    [2]  UInt16
 }
 ```
 
