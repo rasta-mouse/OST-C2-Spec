@@ -93,7 +93,6 @@ Each task request and response message MUST have the following 16-byte header.
 |------------------|--------------------------|
 | 8 - RPortFwd     | 0 - Start                |
 |                  | 1 - Data                 |
-|                  | 2 - Stop                 |
 |------------------|--------------------------|
 | 9 - Environment  | 0 - Get                  |
 |                  | 1 - Set                  |
@@ -138,6 +137,9 @@ Each task request and response message MUST have the following 16-byte header.
 | 19 - P2P         | 0 - Acknowledge          |
 |                  | 1 - PassThru             |
 |------------------|--------------------------|
+| 20 - Jobs        | 0 - List                 |
+|                  | 1 - Kill                 |
+|---------------------------------------------|
 ```
 
 ## Task Flags
@@ -1113,4 +1115,25 @@ LINK-PASS-THRU {
   child-id  [1]  UInt32
   message   [2]  SEQUENCE of Byte
 }
+```
+
+## JOB Definitions
+
+### JOB-LIST-REP
+
+```text
+  jobs  [1]  Sequence of [JobEntry]
+```
+
+### JOB-KILL-REQ
+
+```text
+  id  [1]  UInt32
+```
+
+### JobEntry
+```text
+  id    [1]  UInt32
+  type  [2]  Byte
+  code  [3]  Byte
 ```
