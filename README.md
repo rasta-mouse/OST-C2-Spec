@@ -1128,12 +1128,12 @@ LINK-PASS-THRU {
 ### JOB-KILL-REQ
 
 ```text
-  id  [1]  UInt32
+  index  [1]  UInt32
 ```
 
 ### JobEntry
 ```text
-  id    [1]  UInt32
-  type  [2]  Byte
-  code  [3]  Byte
+  index  [1]  UInt32
+  type   [2]  Byte
+  code   [3]  Byte
 ```
