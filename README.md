@@ -817,24 +817,18 @@ ENV-SET-REQ {
 
 ```text
 SOCKS-CONNECT-REQ {
-  target  [1]  SEQUENCE of Byte (4)
-  port    [2]  UInt16
+  id      [1]  UInt16
+  target  [2]  SEQUENCE of Byte (4)
+  port    [3]  UInt16
 }
 ```
 
-### SOCKS-WRITE-REQ
+### SOCKS-DATA
 
 ```text
-SOCKS-WRITE-REQ {
-  data  [1]  SEQUENCE of Byte
-}
-```
-
-### SOCKS-READ-REQ
-
-```text
-SOCKS-READ-REQ {
-  data  [1]  SEQUENCE of Byte
+SOCKS-DATA {
+  id    [1]  UInt16
+  data  [2]  SEQUENCE of Byte
 }
 ```
 
