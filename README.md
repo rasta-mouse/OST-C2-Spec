@@ -98,9 +98,8 @@ Each task request and response message MUST have the following 16-byte header.
 |                  | 1 - Set                  |
 |------------------|--------------------------|
 | 10 - SOCKS       | 0 - Connect              |
-|                  | 1 - Read                 |
-|                  | 2 - Write                |
-|                  | 3 - Close                |
+|                  | 1 - Data                 |
+|                  | 2 - Close                |
 |------------------|--------------------------|
 | 11 - Tokens      | 0 - List                 |
 |                  | 1 - Make                 |
@@ -831,6 +830,13 @@ SOCKS-DATA {
   data  [2]  SEQUENCE of Byte
 }
 ```
+
+### SOCKS-CLOSE-REQ
+
+```text
+SOCKS-CLOSE-REQ {
+  id  [1]  Uint32
+}
 
 ## Token Definitions
 
