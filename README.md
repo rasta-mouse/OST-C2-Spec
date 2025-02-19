@@ -835,7 +835,7 @@ SOCKS-DATA {
 
 ```text
 SOCKS-CLOSE-REQ {
-  id  [1]  Uint32
+  id  [1]  UInt32
 }
 
 ## Token Definitions
